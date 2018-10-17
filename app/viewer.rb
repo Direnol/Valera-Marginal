@@ -1,6 +1,9 @@
 module Viewer
   class Viewer
     def self.print(_state)
+        # state = [:health, :mana...]
+        # for s in _state
+
       p 'health:'
       p 'mana:'
       p 'stamina:'
