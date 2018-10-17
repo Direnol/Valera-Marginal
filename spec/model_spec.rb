@@ -1,14 +1,14 @@
 require 'model'
 require 'controller'
-RSpec.
+
 describe Model do
-  context 'when create' do
-    subject(:valera) { Model::Human.new. }
+  context 'before create' do
+    subject(:valera) { Model::Human.new }
     subject(:actions) { valera.available_actions }
     subject(:state) { valera.state }
 
     it 'actions' do
-      expect(nil).to eql(actions.actions)
+      expect([]).to eql(actions.available)
     end
     it 'state health' do
       expect(100).to eql(state.health)
@@ -30,12 +30,23 @@ describe Model do
     end
   end
 
-  context 'when controller' do
-    subject(controller) {Controller::Controller.new}
-    it 'run' do
-
-
+  context 'after init' do
+    subject(:valera) { Model::Human.new }
+    subject(:actions) { valera.available_actions }
+    subject(:state) { valera.state }
+    subject(:list_acts) do
+      [Model::Sleep,
+       Model::SingInTheSubway,
+       Model::DrinkWithMarginalPersonalities,
+       Model::GoToTheBar,
+       Model::DrinkWineAndWatchTVSeries,
+       Model::ContemplateNature,
+       Model::GoToWork]
     end
 
+    it 'init actions' do
+      actions.update_available state
+      expect(list_acts).to eql(actions.available)
+    end
   end
 end
