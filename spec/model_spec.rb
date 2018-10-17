@@ -1,6 +1,6 @@
-RSpec.describe Untitled do
+RSpec.describe Model do
   it "has a version number" do
-    expect(Untitled::VERSION).not_to be nil
+    expect(Model::VERSION).not_to be nil
   end
 
   it "does something useful" do
