@@ -1,9 +1,4 @@
-RSpec.describe Model do
-  it "has a version number" do
-    expect(Model::VERSION).not_to be nil
-  end
-
-  it "does something useful" do
-    expect(false).to eq(true)
+RSpec.describe "something" do
+  it "does something" do
   end
 end
