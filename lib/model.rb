@@ -146,7 +146,8 @@ module Model
   end
 
   class Human
-    attr_reader :state, :available_actions
+    attr_reader :available_actions
+    attr_accessor :state
 
     def initialize
       @state = HumanState.new
@@ -156,7 +157,4 @@ module Model
 
   class Valera < Human
   end
-  valera = Valera.new
-  valera.available_actions.update_available valera.state
-  p valera.available_actions.available[1].run valera.state
 end

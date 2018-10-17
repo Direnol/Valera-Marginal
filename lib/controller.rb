@@ -4,25 +4,50 @@ module Controller
 
   class Controller
     def initialize
-      @action = Model::Action
+      #   @action = Model::Action
     end
 
-    def save_state(path); end
+    def save_state(state, path)
+        f = File.open path, 'w'
+        state.instance_variables.each do |st|
+            f.write st.to_s[1..-1] + ' ' + state.instance_variable_get(st).to_s
+            f.write '\n'
+          end
+        f.close unless f.nil?
+    end
 
-    def load_state(path); end
+    def load_state(state, path); end
 
-    def execute(command)
-      method = Kernel.const_get ('@' + @action.to_s + command.to_s)
+    def execute(human)
+      act = Viewer::Viewer.ask human.available_actions.available
+      human.state = act.run human.state
+      human
     end
 
     def run
+      valera = Model::Human.new
+      valera.available_actions.update_available valera.state
       loop do
+        Viewer::Viewer.print valera
+        p 'Enter command: quit|q, next|n, command|c, info|i, load|l, save|s'
         command = gets.chomp
-        valera = Model::Model.new
-        break if (command == 'exit') || (command == 'q')
 
-        Viewer::Viewer.print valera.to_s
-        act = Viewer::Viewer.ask
+        case command
+        when 'q', 'exit'
+          break
+        when 'next', 'n'
+          next
+        when 'command', 'c'
+          valera = execute(valera)
+        when 'info', 'i'
+          Viewer::Viewer.all_actions valera.available_actions.available
+        when 'save', 's'
+          save_state valera.state, 'valera_save'
+        when 'load', 'l'
+          load_state valera.state, 'valera_save'
+        end
+        p 'Type for continue'
+        gets
       end
     end
   end
