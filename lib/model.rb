@@ -14,23 +14,49 @@ module Model
 
   class Action
     def self.descendants
-      ObjectSpace.each_object(Class).select { |child| child < self }
+      ObjectSpace.each_object(Class).select { |child| (child < self) }
     end
+
+    def active?(_human_state)
+      true
+    end
+
     def run(human_state)
       human_state
     end
   end
 
   class GoToWork < Action
+    def active?(human_state)
+      (human_state.mana < 50) && (human_state.fatigue < 10)
+    end
+
     def run(human_state)
       human_state
     end
   end
 
+  class ContemplateNature < Action
+    def run(human_state)
+      human_state
+    end
+
+    def active?(human_state)
+      (human_state.mana < 50) && (human_state.fatigue < 10)
+    end
+  end
+
   class AvailableActions
-    attr_accessor :actions
+    attr_reader :available
     def initialize
-      @actions
+      @actions = Action.descendants
+      @available = []
+    end
+
+    def update_available(human_state)
+      actions.each do |element|
+        available.push(element) if element.active? human_state
+      end
     end
   end
 
@@ -44,9 +70,8 @@ module Model
   end
 
   class Valera < Human
-
   end
   valera = Valera.new
-  p valera.state.health.to_s
+  valera.available_actions.update_available valera.state
+  p valera.available_actions.available
 end
-
