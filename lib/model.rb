@@ -17,11 +17,11 @@ module Model
       ObjectSpace.each_object(Class).select { |child| (child < self) }
     end
 
-    def active?(_human_state)
+    def self.active?(_human_state)
       true
     end
 
-    def run(human_state)
+    def self.run(human_state)
       human_state
     end
   end
@@ -31,13 +31,17 @@ module Model
       (human_state.mana < 50) && (human_state.fatigue < 10)
     end
 
-    def run(human_state)
+    def self.run(human_state)
+      human_state.fatigue += 70
+      human_state.money += 100
+      human_state.mana -= 30
+      human_state.cheerfulness -= 5
       human_state
     end
   end
 
   class ContemplateNature < Action
-    def run(human_state)
+    def self.run(human_state)
       human_state
     end
 
@@ -73,5 +77,5 @@ module Model
   end
   valera = Valera.new
   valera.available_actions.update_available valera.state
-  p valera.available_actions.available
+  p valera.available_actions.available[1].run valera.state
 end
