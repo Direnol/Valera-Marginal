@@ -42,11 +42,92 @@ module Model
 
   class ContemplateNature < Action
     def self.run(human_state)
+      human_state.cheerfulness += 1
+      human_state.mana -= 10
+      human_state.fatigue += 10
       human_state
     end
 
-    def self.active?(human_state)
-      (human_state.mana < 50) && (human_state.fatigue < 10)
+    def self.active?(_human_state)
+      true
+    end
+  end
+
+  class DrinkWineAndWatchTVSeries < Action
+    def self.run(human_state)
+      human_state.cheerfulness -= 1
+      human_state.mana += 30
+      human_state.fatigue += 10
+      human_state.health -= 5
+      human_state.money -= 20
+      human_state
+    end
+
+    def self.active?(_human_state)
+      true
+    end
+  end
+
+  class GoToTheBar < Action
+    def self.run(human_state)
+      human_state.cheerfulness += 1
+      human_state.mana += 60
+      human_state.fatigue += 40
+      human_state.health -= 10
+      human_state.money -= 100
+      human_state
+    end
+
+    def self.active?(_human_state)
+      true
+    end
+  end
+
+  class DrinkWithMarginalPersonalities < Action
+    def self.run(human_state)
+      human_state.cheerfulness += 5
+      human_state.mana += 90
+      human_state.fatigue += 80
+      human_state.health -= 80
+      human_state.money -= 150
+      human_state
+    end
+
+    def self.active?(_human_state)
+      true
+    end
+  end
+
+  class SingInTheSubway < Action
+    def self.run(human_state)
+      human_state.cheerfulness += 1
+      human_state.mana += 10
+      human_state.fatigue += 20
+      human_state.mana += 10
+      human_state.money += 50 if human_state.mana > 50 && human_state.mana < 70
+      human_state
+    end
+
+    def self.active?(_human_state)
+      true
+    end
+  end
+
+  class Sleep < Action
+    def self.run(human_state)
+      human_state.health += if human_state.mana < 30
+                              90
+                            else
+                              20
+                            end
+      human_state.cheerfulness -= 3 if human_state.mana > 70
+      human_state.mana -= 50
+      human_state.fatigue -= 70
+      human_state
+    end
+
+    def self.active?(_human_state)
+      true
     end
   end
 
