@@ -21,6 +21,7 @@ module Controller
     def execute(human)
       act = Viewer::Viewer.ask human.available_actions.available
       human.state = act.run human.state
+      human.available_actions.update_available human.state
       human
     end
 

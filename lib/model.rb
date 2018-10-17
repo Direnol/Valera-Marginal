@@ -139,8 +139,9 @@ module Model
     end
 
     def update_available(human_state)
+      @available = []
       @actions.each do |element|
-        available.push(element) if element.active? human_state
+        @available.push(element) if element.active? human_state
       end
     end
   end
