@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-load 'app/controller.rb'
+load 'lib/controller.rb'
 
-controller = Controller::Controller.new
+# controller = Controller::Controller.new
 
-controller.run
+# controller.run
