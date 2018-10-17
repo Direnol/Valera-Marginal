@@ -4,7 +4,7 @@ module Controller
 
   class Controller
     def initialize
-        @action = Model::Action
+      @action = Model::Action
     end
 
     def save_state(state, path)
@@ -28,14 +28,13 @@ module Controller
     def execute(human)
       act = Viewer::Viewer.ask human.available_actions.available
       human.state = act.run human.state
-      human.available_actions.update_available human.state
       human
     end
 
     def run
       valera = Model::Human.new
-      valera.available_actions.update_available valera.state
       loop do
+        valera.available_actions.update_available valera.state
         Viewer::Viewer.print valera
         p 'Enter command: quit|q, next|n, command|c,' \
           'info|i, load|l, save|s pwd|p'
