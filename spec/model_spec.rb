@@ -1,11 +1,14 @@
 require 'model'
-
+require 'controller'
+RSpec.
 describe Model do
   context 'when create' do
-    subject(:valera) { Model::Human.new }
-    subject(:state) { Model::HumanState.new }
+    subject(:valera) { Model::Human.new. }
+    subject(:actions) { valera.available_actions }
+    subject(:state) { valera.state }
+
     it 'actions' do
-      expect(nil).to eql(valera.get_list_of_action)
+      expect(nil).to eql(actions.actions)
     end
     it 'state health' do
       expect(100).to eql(state.health)
@@ -25,5 +28,14 @@ describe Model do
     it 'state sm' do
       expect(22).to eql(state.sm)
     end
+  end
+
+  context 'when controller' do
+    subject(controller) {Controller::Controller.new}
+    it 'run' do
+
+
+    end
+
   end
 end

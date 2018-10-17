@@ -27,7 +27,7 @@ module Model
   end
 
   class GoToWork < Action
-    def active?(human_state)
+    def self.active?(human_state)
       (human_state.mana < 50) && (human_state.fatigue < 10)
     end
 
@@ -41,7 +41,7 @@ module Model
       human_state
     end
 
-    def active?(human_state)
+    def self.active?(human_state)
       (human_state.mana < 50) && (human_state.fatigue < 10)
     end
   end
@@ -54,7 +54,7 @@ module Model
     end
 
     def update_available(human_state)
-      actions.each do |element|
+      @actions.each do |element|
         available.push(element) if element.active? human_state
       end
     end
