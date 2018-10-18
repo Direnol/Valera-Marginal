@@ -25,6 +25,10 @@ module Controller
       state
      end
 
+    def check_state(h_s)
+      h_s.state.health < -100
+    end
+
     def execute(human)
       act = Viewer::Viewer.ask human.available_actions.available
       human.state = act.run human.state
@@ -49,6 +53,10 @@ module Controller
           next
         when 'command', 'c'
           valera = execute(valera)
+          if check_state valera
+            p 'Valera dead!!!'
+            exit 0
+          end
         when 'info', 'i'
           Viewer::Viewer.all_actions valera.available_actions.available
         when 'save', 's'
