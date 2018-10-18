@@ -25,7 +25,7 @@ module Controller
       state
      end
 
-    def check_state(h_s)
+    def dead?(h_s)
       h_s.state.health < -100
     end
 
@@ -41,7 +41,7 @@ module Controller
         valera.available_actions.update_available valera.state
         Viewer::Viewer.print valera
         p 'Enter command: quit|q, next|n, command|c,' \
-          'info|i, load|l, save|s pwd|p'
+          'info|i, load|l, save|s, pwd|p'
         command = gets.chomp
 
         case command
@@ -53,7 +53,7 @@ module Controller
           next
         when 'command', 'c'
           valera = execute(valera)
-          if check_state valera
+          if dead? valera
             p 'Valera dead!!!'
             exit 0
           end
